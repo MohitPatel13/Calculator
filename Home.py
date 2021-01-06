@@ -6,9 +6,11 @@ window = tk.Tk()
 window.title('Calculator')
 frame = LabelFrame(window)
 frame.pack(padx=1, pady=1)
-output = Label(frame, text="1", background="light grey")
+output = Label(frame, text="0", background="light grey")
 output.config(height=4,width=32)
 output.grid(row=0,column=0,columnspan=4, sticky="NSEW")
+
+dec_used = False
 
 def check_out_empty():
     if output.cget("text") == "0":
@@ -71,10 +73,20 @@ def three_button():
     else:
         output.config(text=output.cget("text")+"3")
 def decimal_button():
+    global dec_used
     if check_out_empty():
         output.config(text="0.")
-    else:
+    elif not dec_used:
         output.config(text=output.cget("text")+".")
+    dec_used = True
+
+def posneg_button():
+    if check_out_empty():
+        output.config(text="-0")
+    elif output.cget("text")[0] == "-":
+        output.config(text=output.cget("text")[1:])
+    else:
+        output.config(text="-"+output.cget("text"))
 
 clear = Button(frame, text="Clear", command=clear_button)
 clear.config(height=4, width=8)
@@ -88,7 +100,7 @@ four.grid(row=3, column=0, sticky="NSEW")
 one = Button(frame, text="1", command=one_button)
 one.config(height=4,width=8)
 one.grid(row=4, column=0, sticky="NSEW")
-posneg = Button(frame, text="+/-")
+posneg = Button(frame, text="+/-", command=posneg_button)
 posneg.config(height=4, width=8)
 posneg.grid(row=1, column=1, columnspan=2, sticky="NSEW")
 eight = Button(frame, text="8", command=eight_button)
