@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import re
 
 
 window = tk.Tk()
@@ -154,7 +155,7 @@ def posneg_button():
     oper_in = False
     i= len(output.cget("text"))-1
     while output.cget("text")[i] not in operators:
-        print(i)
+        #print(i)
         if i-1 != -1:
             i -= 1
         if i == 0:
@@ -226,6 +227,68 @@ def plus_button():
         dec_used = False
         minus_used = False
 
+def equals_button():
+    out_list = re.split(r'([^.0-9])', str(output.cget("text")))
+    out_list = list(filter(None, out_list))
+    print(out_list)
+    neg_first = False
+    if out_list[0] == "-":
+        neg_first = True
+    if not neg_first:
+        running_sum = float(out_list[0])
+    else:
+        running_sum = -float(out_list[1])
+
+    for item in out_list[1:]:
+        if item == "/":
+            # print(running_sum)
+            if out_list[out_list.index(item)+1] == "-":
+                running_sum = float(running_sum)/-float(out_list[out_list.index(item)+2])
+            else:
+                running_sum = float(running_sum)/float(out_list[out_list.index(item)+1])
+            # print(float(out_list[out_list.index(item)+1]))
+            # print(running_sum)
+        elif item == "*":
+            if out_list[out_list.index(item)+1] == "-":
+                running_sum = float(running_sum)*-float(out_list[out_list.index(item)+2])
+            else:
+                running_sum = float(running_sum)*float(out_list[out_list.index(item)+1])
+
+        elif item == "+":
+            if out_list[out_list.index(item)+1] == "-":
+                running_sum = float(running_sum)+-float(out_list[out_list.index(item)+2])
+            else:
+                running_sum = float(running_sum)+float(out_list[out_list.index(item)+1])
+        elif item == "-" and ((out_list[out_list.index(item)-1]) not in ["/", "*", "+"]):
+            running_sum = float(running_sum)-float(out_list[out_list.index(item)+1])
+
+    output.config(text=str(running_sum))
+    #operators = ["/", "*", "+", "-"]
+    # i = 0
+    # running_sum = float(0)
+    # while output.cget("text")[i] is not None:
+    #     if output.cget("text")[i] in operators:
+    #         running_sum = float(output.cget("text")[:i])
+    #     i += 1
+    # m = 0
+    # while output.cget("text")[m] is not None:
+    #     if output.cget("text")[m] in operators:
+    #         if output.cget("text")[m] == "/":
+    #             running_sum = running_sum/output.cget("text")[m+1]
+    #         elif output.cget("text")[m] == "*":
+    #             running_sum = running_sum*output.cget("text")[m+1]
+    #         elif output.cget("text")[m] == "+":
+    #             running_sum = running_sum+output.cget("text")[m+1]
+    #         elif output.cget("text")[m] == "-":
+    #             running_sum = running_sum-output.cget("text")[m+1]
+    #     m += 1
+    # output.config(text=running_sum)
+
+
+
+
+
+
 
 clear = Button(frame, text="AC", command=clear_button)
 clear.config(height=4, width=8)
@@ -278,7 +341,7 @@ minus.grid(row=3, column=3, sticky="NSEW")
 plus = Button(frame, text="+", command=plus_button)
 plus.config(height=4, width=8)
 plus.grid(row=4, column=3, sticky="NSEW")
-equals = Button(frame, text="=")
+equals = Button(frame, text="=", command=equals_button)
 equals.config(height=4, width=8)
 equals.grid(row=5, column=3, sticky="NSEW")
 
