@@ -11,6 +11,7 @@ output.config(height=4,width=32)
 output.grid(row=0,column=0,columnspan=4, sticky="NSEW")
 
 dec_used = False
+minus_used = False
 
 def check_out_empty():
     if output.cget("text") == "0":
@@ -18,77 +19,215 @@ def check_out_empty():
     else:
         empty_out = False
     return empty_out
-
+def check_out_neg_empty():
+    if output.cget("text") == "-0":
+        empty_neg_out = True
+    else:
+        empty_neg_out = False
+    return empty_neg_out
+def prev_operator():
+    if output.cget("text")[-1] in ["/", "*", "+", "-"]:
+        return True
+    else:
+        return False
+def operator_zero():
+    if len(output.cget("text"))>=2:
+        if output.cget("text")[-2] in ["/", "*", "+", "-"] and output.cget("text")[-1] == "0":
+            return True
+        else:
+            return False
+    else:
+        return False
 
 def clear_button():
     output.config(text="0")
+    clear.config(text="AC")
+    global dec_used
+    dec_used = False
 def seven_button():
     if check_out_empty():
         output.config(text="7")
+    elif check_out_neg_empty():
+        output.config(text="-7")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"7")
     else:
         output.config(text=output.cget("text")+"7")
+    clear.config(text="C")
 def four_button():
     if check_out_empty():
         output.config(text="4")
+    elif check_out_neg_empty():
+        output.config(text="-4")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"4")
     else:
         output.config(text=output.cget("text")+"4")
+    clear.config(text="C")
 def one_button():
     if check_out_empty():
         output.config(text="1")
+    elif check_out_neg_empty():
+        output.config(text="-1")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"1")
     else:
         output.config(text=output.cget("text")+"1")
+    clear.config(text="C")
 def eight_button():
     if check_out_empty():
         output.config(text="8")
+    elif check_out_neg_empty():
+        output.config(text="-8")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"8")
     else:
         output.config(text=output.cget("text")+"8")
+    clear.config(text="C")
 def five_button():
     if check_out_empty():
         output.config(text="5")
+    elif check_out_neg_empty():
+        output.config(text="-5")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"5")
     else:
         output.config(text=output.cget("text")+"5")
+    clear.config(text="C")
 def two_button():
     if check_out_empty():
         output.config(text="2")
+    elif check_out_neg_empty():
+        output.config(text="-2")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"2")
     else:
         output.config(text=output.cget("text")+"2")
+    clear.config(text="C")
 def zero_button():
     if check_out_empty():
         output.config(text="0")
-    else:
+    elif not output.cget("text")[-1] == "0" or dec_used:
         output.config(text=output.cget("text")+"0")
 def nine_button():
     if check_out_empty():
         output.config(text="9")
+    elif check_out_neg_empty():
+        output.config(text="-9")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"9")
     else:
         output.config(text=output.cget("text")+"9")
+    clear.config(text="C")
 def six_button():
     if check_out_empty():
         output.config(text="6")
+    elif check_out_neg_empty():
+        output.config(text="-6")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"6")
     else:
         output.config(text=output.cget("text")+"6")
+    clear.config(text="C")
 def three_button():
     if check_out_empty():
         output.config(text="3")
+    elif check_out_neg_empty():
+        output.config(text="-3")
+    elif operator_zero():
+        output.config(text=output.cget("text")[:-1]+"3")
     else:
         output.config(text=output.cget("text")+"3")
+    clear.config(text="C")
 def decimal_button():
     global dec_used
     if check_out_empty():
         output.config(text="0.")
-    elif not dec_used:
+    elif not dec_used and not prev_operator():
         output.config(text=output.cget("text")+".")
     dec_used = True
 
 def posneg_button():
     if check_out_empty():
         output.config(text="-0")
-    elif output.cget("text")[0] == "-":
-        output.config(text=output.cget("text")[1:])
-    else:
-        output.config(text="-"+output.cget("text"))
+    operators = ["/", "*", "+", "-"]
+    oper_in = False
+    i= len(output.cget("text"))-1
+    while output.cget("text")[i] not in operators:
+        print(i)
+        if i-1 != -1:
+            i -= 1
+        if i == 0:
+            oper_in = False
+            break
+        else:
+            oper_in = True
+    if oper_in:
+        if output.cget("text")[i] == "-":
+            if not minus_used:
+                output.config(text=output.cget("text")[:i] + output.cget("text")[i+1:])
+            else:
+                if output.cget("text")[i] == "-" and output.cget("text")[i-1] == "-":
+                    output.config(text=output.cget("text")[:i] + output.cget("text")[i + 1:])
+                else:
+                    output.config(text=output.cget("text")[:i + 1] + "-" + output.cget("text")[i + 1:])
+        else:
+            output.config(text=output.cget("text")[:i+1] + "-" + output.cget("text")[i+1:])
 
-clear = Button(frame, text="Clear", command=clear_button)
+
+    else:
+        if output.cget("text")[0] == "-":
+            output.config(text=output.cget("text")[1:])
+        else:
+            output.config(text="-"+output.cget("text"))
+
+def divide_button():
+    global dec_used, minus_used
+    if check_out_empty():
+        output.config(text="0/")
+    elif check_out_neg_empty():
+        output.config(text="-0/")
+    elif not output.cget("text")[-1] == "/" and not prev_operator():
+        output.config(text=(output.cget("text")+"/"))
+        dec_used = False
+        minus_used = False
+def multiply_button():
+    global dec_used, minus_used
+    if check_out_empty():
+        output.config(text="0*")
+    elif check_out_neg_empty():
+        output.config(text="-0*")
+    elif not output.cget("text")[-1] == "*" and not prev_operator():
+        output.config(text=(output.cget("text")+"*"))
+        dec_used = False
+        minus_used = False
+def minus_button():
+    global dec_used
+    global minus_used
+    if check_out_empty():
+        output.config(text="0-")
+        minus_used = True
+    elif check_out_neg_empty():
+        output.config(text="-0-")
+        minus_used = True
+    elif not output.cget("text")[-1] == "-" and not prev_operator():
+        output.config(text=(output.cget("text")+"-"))
+        dec_used = False
+        minus_used = True
+
+def plus_button():
+    global dec_used, minus_used
+    if check_out_empty():
+        output.config(text="0+")
+    elif check_out_neg_empty():
+        output.config(text="-0+")
+    elif not output.cget("text")[-1] == "+" and not prev_operator():
+        output.config(text=(output.cget("text")+"+"))
+        dec_used = False
+        minus_used = False
+
+
+clear = Button(frame, text="AC", command=clear_button)
 clear.config(height=4, width=8)
 clear.grid(row=1, column=0, sticky="NSEW")
 seven = Button(frame, text="7")
@@ -127,19 +266,19 @@ three.grid(row=4, column=2, sticky="NSEW")
 decimal = Button(frame, text=".", command=decimal_button)
 decimal.config(height=4,width=8)
 decimal.grid(row=5, column=2, sticky="NSEW")
-divide = Button(frame, text="÷")
+divide = Button(frame, text="÷", command=divide_button)
 divide.config(height=4, width=8)
 divide.grid(row=1, column=3, sticky="NSEW")
-multiply = Button(frame, text ="×")
+multiply = Button(frame, text="×", command=multiply_button)
 multiply.config(height=4, width=8)
 multiply.grid(row=2, column=3, sticky="NSEW")
-minus = Button(frame, text ="-")
+minus = Button(frame, text="-", command=minus_button)
 minus.config(height=4, width=8)
 minus.grid(row=3, column=3, sticky="NSEW")
-plus = Button(frame, text ="+")
+plus = Button(frame, text="+", command=plus_button)
 plus.config(height=4, width=8)
 plus.grid(row=4, column=3, sticky="NSEW")
-equals = Button(frame, text ="=")
+equals = Button(frame, text="=")
 equals.config(height=4, width=8)
 equals.grid(row=5, column=3, sticky="NSEW")
 
