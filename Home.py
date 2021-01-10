@@ -13,6 +13,7 @@ output.grid(row=0,column=0,columnspan=4, sticky="NSEW")
 
 dec_used = False
 minus_used = False
+equals_used = False
 
 def check_out_empty():
     if output.cget("text") == "0":
@@ -43,103 +44,114 @@ def operator_zero():
 def clear_button():
     output.config(text="0")
     clear.config(text="AC")
-    global dec_used
+    global dec_used, equals_used
     dec_used = False
+    equals_used = False
 def seven_button():
-    if check_out_empty():
-        output.config(text="7")
-    elif check_out_neg_empty():
-        output.config(text="-7")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"7")
-    else:
-        output.config(text=output.cget("text")+"7")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="7")
+        elif check_out_neg_empty():
+            output.config(text="-7")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"7")
+        else:
+            output.config(text=output.cget("text")+"7")
+        clear.config(text="C")
 def four_button():
-    if check_out_empty():
-        output.config(text="4")
-    elif check_out_neg_empty():
-        output.config(text="-4")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"4")
-    else:
-        output.config(text=output.cget("text")+"4")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="4")
+        elif check_out_neg_empty():
+            output.config(text="-4")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"4")
+        else:
+            output.config(text=output.cget("text")+"4")
+        clear.config(text="C")
 def one_button():
-    if check_out_empty():
-        output.config(text="1")
-    elif check_out_neg_empty():
-        output.config(text="-1")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"1")
-    else:
-        output.config(text=output.cget("text")+"1")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="1")
+        elif check_out_neg_empty():
+            output.config(text="-1")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"1")
+        else:
+            output.config(text=output.cget("text")+"1")
+        clear.config(text="C")
 def eight_button():
-    if check_out_empty():
-        output.config(text="8")
-    elif check_out_neg_empty():
-        output.config(text="-8")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"8")
-    else:
-        output.config(text=output.cget("text")+"8")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="8")
+        elif check_out_neg_empty():
+            output.config(text="-8")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"8")
+        else:
+            output.config(text=output.cget("text")+"8")
+        clear.config(text="C")
 def five_button():
-    if check_out_empty():
-        output.config(text="5")
-    elif check_out_neg_empty():
-        output.config(text="-5")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"5")
-    else:
-        output.config(text=output.cget("text")+"5")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="5")
+        elif check_out_neg_empty():
+            output.config(text="-5")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"5")
+        else:
+            output.config(text=output.cget("text")+"5")
+        clear.config(text="C")
 def two_button():
-    if check_out_empty():
-        output.config(text="2")
-    elif check_out_neg_empty():
-        output.config(text="-2")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"2")
-    else:
-        output.config(text=output.cget("text")+"2")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="2")
+        elif check_out_neg_empty():
+            output.config(text="-2")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"2")
+        else:
+            output.config(text=output.cget("text")+"2")
+        clear.config(text="C")
 def zero_button():
-    if check_out_empty():
-        output.config(text="0")
-    elif not output.cget("text")[-1] == "0" or dec_used:
-        output.config(text=output.cget("text")+"0")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="0")
+        elif not output.cget("text")[-1] == "0" or dec_used:
+            output.config(text=output.cget("text")+"0")
 def nine_button():
-    if check_out_empty():
-        output.config(text="9")
-    elif check_out_neg_empty():
-        output.config(text="-9")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"9")
-    else:
-        output.config(text=output.cget("text")+"9")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="9")
+        elif check_out_neg_empty():
+            output.config(text="-9")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"9")
+        else:
+            output.config(text=output.cget("text")+"9")
+        clear.config(text="C")
 def six_button():
-    if check_out_empty():
-        output.config(text="6")
-    elif check_out_neg_empty():
-        output.config(text="-6")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"6")
-    else:
-        output.config(text=output.cget("text")+"6")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="6")
+        elif check_out_neg_empty():
+            output.config(text="-6")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"6")
+        else:
+            output.config(text=output.cget("text")+"6")
+        clear.config(text="C")
 def three_button():
-    if check_out_empty():
-        output.config(text="3")
-    elif check_out_neg_empty():
-        output.config(text="-3")
-    elif operator_zero():
-        output.config(text=output.cget("text")[:-1]+"3")
-    else:
-        output.config(text=output.cget("text")+"3")
-    clear.config(text="C")
+    if not equals_used:
+        if check_out_empty():
+            output.config(text="3")
+        elif check_out_neg_empty():
+            output.config(text="-3")
+        elif operator_zero():
+            output.config(text=output.cget("text")[:-1]+"3")
+        else:
+            output.config(text=output.cget("text")+"3")
+        clear.config(text="C")
 def decimal_button():
     global dec_used
     if check_out_empty():
@@ -183,7 +195,8 @@ def posneg_button():
             output.config(text="-"+output.cget("text"))
 
 def divide_button():
-    global dec_used, minus_used
+    global dec_used, minus_used, equals_used
+    equals_used = False
     if check_out_empty():
         output.config(text="0/")
     elif check_out_neg_empty():
@@ -193,7 +206,8 @@ def divide_button():
         dec_used = False
         minus_used = False
 def multiply_button():
-    global dec_used, minus_used
+    global dec_used, minus_used, equals_used
+    equals_used = False
     if check_out_empty():
         output.config(text="0*")
     elif check_out_neg_empty():
@@ -205,6 +219,8 @@ def multiply_button():
 def minus_button():
     global dec_used
     global minus_used
+    global equals_used
+    equals_used = False
     if check_out_empty():
         output.config(text="0-")
         minus_used = True
@@ -217,7 +233,8 @@ def minus_button():
         minus_used = True
 
 def plus_button():
-    global dec_used, minus_used
+    global dec_used, minus_used, equals_used
+    equals_used = False
     if check_out_empty():
         output.config(text="0+")
     elif check_out_neg_empty():
@@ -228,6 +245,9 @@ def plus_button():
         minus_used = False
 
 def equals_button():
+
+    global equals_used
+    equals_used = True
     out_list = re.split(r'([^.0-9])', str(output.cget("text")))
     out_list = list(filter(None, out_list))
     print(out_list)
@@ -242,26 +262,28 @@ def equals_button():
     for item in out_list[1:]:
         if item == "/":
             # print(running_sum)
-            if out_list[out_list.index(item)+1] == "-":
-                running_sum = float(running_sum)/-float(out_list[out_list.index(item)+2])
+            if out_list[out_list.index(item) + 1] == "-":
+                running_sum = float(running_sum) / -float(out_list[out_list.index(item) + 2])
             else:
-                running_sum = float(running_sum)/float(out_list[out_list.index(item)+1])
+                running_sum = float(running_sum) / float(out_list[out_list.index(item) + 1])
             # print(float(out_list[out_list.index(item)+1]))
             # print(running_sum)
         elif item == "*":
-            if out_list[out_list.index(item)+1] == "-":
-                running_sum = float(running_sum)*-float(out_list[out_list.index(item)+2])
+            if out_list[out_list.index(item) + 1] == "-":
+                running_sum = float(running_sum) * -float(out_list[out_list.index(item) + 2])
             else:
-                running_sum = float(running_sum)*float(out_list[out_list.index(item)+1])
+                running_sum = float(running_sum) * float(out_list[out_list.index(item) + 1])
 
         elif item == "+":
-            if out_list[out_list.index(item)+1] == "-":
-                running_sum = float(running_sum)+-float(out_list[out_list.index(item)+2])
+            if out_list[out_list.index(item) + 1] == "-":
+                running_sum = float(running_sum) + -float(out_list[out_list.index(item) + 2])
             else:
-                running_sum = float(running_sum)+float(out_list[out_list.index(item)+1])
-        elif item == "-" and ((out_list[out_list.index(item)-1]) not in ["/", "*", "+"]):
-            running_sum = float(running_sum)-float(out_list[out_list.index(item)+1])
-
+                running_sum = float(running_sum) + float(out_list[out_list.index(item) + 1])
+        elif item == "-" and ((out_list[out_list.index(item) - 1]) not in ["/", "*", "+","-"]):
+            if out_list[out_list.index(item) + 1] == "-":
+                running_sum = float(running_sum) + float(out_list[out_list.index(item) + 2])/2
+            else:
+                running_sum = float(running_sum) - float(out_list[out_list.index(item) + 1])
     output.config(text=str(running_sum))
     #operators = ["/", "*", "+", "-"]
     # i = 0
